@@ -45,7 +45,7 @@ const expirationDatePattern = {
 const expirationDateMasked = IMask(expirationDate, expirationDatePattern)
 
 const cardNumber = document.querySelector("#card-number")
-const cardNumberPatter = {
+const cardNumberPattern = {
   mask: [
     {
       mask: "0000 0000 0000 0000",
@@ -64,5 +64,11 @@ const cardNumberPatter = {
   ],
   dispatch: function(appended, dynamicMasked) {
     const number = (dynamicMasked.value + appended).replace(/\D/g,"")
+    const foundMask = dynamicMasked.compiledMasks.find(function (item) {
+      return number.match(item.regex)
+    })
+    
+    return foundMask
   },
 }
+const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
